@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eureka – Fake News Detector</title>
+  <meta name="description" content="Detect fake news and misinformation instantly with AI-powered analysis."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-anim">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">🛡️</div>
+      <span class="logo-text">Eureka</span><span class="accent"></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#how-it-works">How it Works</a>
+      <a href="#features">Features</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="badge">🤖 AI-Powered Analysis</div>
+      <h1>Detect <span class="gradient-text">Fake News</span><br/>Instantly</h1>
+      <p class="subtitle">Paste any article, headline, or claim below. Our multi-signal analysis engine will evaluate credibility, sentiment, bias, and more in seconds.</p>
+    </section>
+
+    <!-- Detector Card -->
+    <section class="detector-card" id="detector">
+      <div class="tab-bar">
+        <button class="tab active" data-tab="text" id="tab-text">📝 Paste Text</button>
+        <button class="tab" data-tab="url" id="tab-url">🔗 Enter URL</button>
+        <button class="tab" data-tab="headline" id="tab-headline">📰 Headline Only</button>
+      </div>
+
+      <!-- Text Tab -->
+      <div class="tab-content active" id="content-text">
+        <textarea id="news-text" placeholder="Paste the full article or news content here…" rows="8" maxlength="5000"></textarea>
+        <div class="char-count"><span id="char-count">0</span>/5000</div>
+      </div>
+
+      <!-- URL Tab -->
+      <div class="tab-content" id="content-url">
+        <div class="url-input-wrap">
+          <span class="url-icon">🔗</span>
+          <input type="url" id="news-url" placeholder="https://example.com/article"/>
+        </div>
+        <p class="hint">Enter the URL of a news article to analyze its content and source credibility.</p>
+      </div>
+
+      <!-- Headline Tab -->
+      <div class="tab-content" id="content-headline">
+        <input type="text" id="news-headline" placeholder="e.g. Scientists discover cure for all diseases in one pill" class="headline-input"/>
+        <p class="hint">Analyzing headlines alone provides a quick clickbait and sensationalism score.</p>
+      </div>
+
+      <button class="analyze-btn" id="analyze-btn" onclick="analyzeNews()">
+        <span class="btn-icon">🔍</span>
+        <span class="btn-text">Analyze Now</span>
+      </button>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results-section" style="display:none;">
+      <div class="results-header">
+        <h2>Analysis Result</h2>
+        <button class="clear-btn" onclick="clearResults()">✕ Clear</button>
+      </div>
+
+      <!-- Verdict Banner -->
+      <div class="verdict-banner" id="verdict-banner">
+        <div class="verdict-icon" id="verdict-icon"></div>
+        <div class="verdict-info">
+          <div class="verdict-label" id="verdict-label"></div>
+          <div class="verdict-sub" id="verdict-sub"></div>
+        </div>
+        <div class="credibility-score">
+          <div class="score-ring" id="score-ring">
+            <svg viewBox="0 0 120 120">
+              <circle class="ring-bg" cx="60" cy="60" r="50"/>
+              <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="50"
+                stroke-dasharray="314"
+                stroke-dashoffset="314"
+                transform="rotate(-90 60 60)"/>
+            </svg>
+            <div class="score-val" id="score-val">0</div>
+          </div>
+          <div class="score-label">Credibility</div>
+        </div>
+      </div>
+
+      <!-- Signal Cards -->
+      <div class="signals-grid" id="signals-grid"></div>
+
+      <!-- Detailed Breakdown -->
+      <div class="breakdown-card">
+        <h3>📊 Detailed Breakdown</h3>
+        <div class="breakdown-bars" id="breakdown-bars"></div>
+      </div>
+
+      <!-- Red Flags -->
+      <div class="flags-card" id="flags-card" style="display:none;">
+        <h3>🚩 Red Flags Detected</h3>
+        <ul class="flags-list" id="flags-list"></ul>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="rec-card">
+        <h3>💡 Recommendations</h3>
+        <ul class="rec-list" id="rec-list"></ul>
+      </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="info-section" id="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">📥</div>
+          <h3>Submit Content</h3>
+          <p>Paste your article, enter a URL, or type a headline directly into the analyzer.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">🧠</div>
+          <h3>Multi-Signal AI Analysis</h3>
+          <p>Our engine checks sentiment, bias, clickbait patterns, source credibility, writing style, and factual consistency.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">📋</div>
+          <h3>Get Detailed Report</h3>
+          <p>Receive a comprehensive breakdown with a credibility score, red flags, and actionable recommendations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="info-section" id="features">
+      <h2>Detection Signals</h2>
+      <div class="features-grid">
+        <div class="feature-card">🎭 <strong>Sentiment Analysis</strong><br/><small>Detects emotional manipulation and fear-mongering language</small></div>
+        <div class="feature-card">📡 <strong>Source Quality</strong><br/><small>Evaluates domain reputation and author credibility</small></div>
+        <div class="feature-card">🎯 <strong>Clickbait Detection</strong><br/><small>Identifies sensationalist headlines designed to mislead</small></div>
+        <div class="feature-card">⚠️ <strong>Bias Scoring</strong><br/><small>Measures political or ideological slant in the content</small></div>
+        <div class="feature-card">✍️ <strong>Writing Quality</strong><br/><small>Checks grammar, structure, and journalistic standards</small></div>
+        <div class="feature-card">🔄 <strong>Cross-Reference</strong><br/><small>Compares claims against known fact-check databases</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ <strong>Disclaimer:</strong> Eureka is an educational tool. Always verify information from multiple trusted sources before drawing conclusions.</p>
+    <p style="margin-top:8px; opacity:0.5;">© 2026 FakeShield • Built for digital literacy</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
